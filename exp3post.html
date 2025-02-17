@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .product {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Product List</h2>
+    <input type="number" id="minPrice" placeholder="Enter minimum price">
+    <button onclick="filterProducts()">Filter Products</button>
+    <div id="productList"></div>
+</div>
+
+<script>
+    // Sample JSON object containing product data
+    const products = [
+        { id: 1, name: "Laptop", price: 800 },
+        { id: 2, name: "Smartphone", price: 500 },
+        { id: 3, name: "Tablet", price: 300 },
+        { id: 4, name: "Smartwatch", price: 200 },
+        { id: 5, name: "Headphones", price: 100 }
+    ];
+
+    // Function to display products
+    function displayProducts(productList) {
+        const productListDiv = document.getElementById("productList");
+        productListDiv.innerHTML = "";
+
+        if (productList.length === 0) {
+            productListDiv.innerHTML = "<p>No products found.</p>";
+            return;
+        }
+
+        productList.forEach(product => {
+            const productDiv = document.createElement("div");
+            productDiv.classList.add("product");
+            productDiv.innerHTML = `<strong>${product.name}</strong> - $${product.price}`;
+            productListDiv.appendChild(productDiv);
+        });
+    }
+
+    // Function to filter products by minimum price
+    function filterProducts() {
+        const minPrice = parseFloat(document.getElementById("minPrice").value);
+
+        if (isNaN(minPrice)) {
+            alert("Please enter a valid number.");
+            return;
+        }
+
+        const filteredProducts = products.filter(product => product.price >= minPrice);
+        displayProducts(filteredProducts);
+    }
+
+    // Display all products initially
+    displayProducts(products);
+</script>
+
+</body>
+</html>
